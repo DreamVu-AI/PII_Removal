@@ -1,0 +1,10 @@
+outputs_test
+detections
+*.zip
+GDM*
+clips_10s
+models
+.venv
+.DS_Store
+.claude
+scripts/test_unused
