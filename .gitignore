@@ -8,3 +8,5 @@ models
 .DS_Store
 .claude
 scripts/test_unused
+cascade_two_stage_out*
+final_output_videos*
