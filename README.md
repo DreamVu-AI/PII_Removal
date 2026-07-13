@@ -19,6 +19,28 @@ Only candidates that survive both stages get blurred (ellipse-masked
 box-blur, the same style `deface` itself uses). See
 `scripts/cascade_two_stage_blur.py` for the full logic and inline comments.
 
+## Key parameter choices (vs. deface's defaults)
+
+This pipeline uses deface's own detector (CenterFace) as Stage 1, not the
+plain `deface` CLI with its defaults — a few settings were changed
+deliberately:
+
+- **Detection threshold: 0.1** instead of deface's default 0.2. Set low on
+  purpose — since every Stage-1 candidate gets independently re-verified by
+  SCRFD (Stage 2) before anything is blurred, it's safer to over-flag at
+  Stage 1 than risk silently dropping a real face before it ever gets a
+  second look.
+- **Stage 2 verifier: SCRFD** (from InsightFace), used to confirm or reject
+  every Stage-1 candidate before blurring.
+- **Detector input capped at 1920×1080**, regardless of the source video's
+  native resolution. deface's default runs its network at the frame's full
+  native resolution — on this project's exo camera footage (5312×4648) that
+  was measured at 28+ seconds *per frame*. Capping the network's input size
+  gave a ~35x speedup with no accuracy loss (verified by diffing detection
+  output at both settings — identical results, just faster).
+- **Blur style**: kept deface's own default (ellipse-masked blur, not a
+  hard rectangle or pixelation).
+
 ## Setup
 
 ```bash
