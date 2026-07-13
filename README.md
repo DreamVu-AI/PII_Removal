@@ -22,10 +22,10 @@ box-blur, the same style `deface` itself uses). See
 ## Setup
 
 ```bash
-cd /Users/bharatgen-hyd-2025-35/Desktop/PI_Removal
+cd PI_Removal
 python3 -m venv .venv
 source .venv/bin/activate
-pip install deface insightface onnxruntime opencv-python numpy scikit-image
+pip install -r requirements.txt
 ```
 
 On first run, `insightface` auto-downloads its SCRFD model (~280MB) to
